@@ -9,5 +9,16 @@
   4)answer--  select * from city where ID =1661;
   5)answer -- select * from city where COUNTRYCODE= 'JPN';
   6)answer-- select NAME from city where COUNTRYCODE ='JPN';
-  7)answer--
-  
+  7)answer-- select City, State from Station;
+  8)answer--select DISTINCT city FROM station WHERE MOD(ID,2)=0 ORDER BY City; 
+  9)answer--select count(city)- count(DISTINCT CITY) from station;
+  10)answer--select city, length(city) from station order by length(city) DESC,city ASC fetch first row only;
+             select city, length(city) from station order by length(city) asc ,city asc fetch first row only; 
+  11)answer--select DISTINCT(CITY) from station WHERE City LIKE 'A%' OR City LIKE 'E%' OR City LIKE 'I%' OR City LIKE 'O%' 
+             OR City LIKE 'U%' ORDER by City;
+  12) answer--SELECT DISTINCT(CITY) FROM STATION WHERE CITY LIKE '%a' OR CITY LIKE '%e' OR CITY LIKE '%i' OR CITY LIKE '%o' 
+              OR CITY LIKE '%u' order by city; 
+   13) answer-- SELECT DISTINCT CITY FROM STATION WHERE upper(SUBSTR(CITY,1,1)) NOT IN ('A','E','I','O','U') AND lower(SUBSTR(CITY,1,1)) NOT IN('a','e','i','o','u'); 
+   14)answer--SELECT DISTINCT CITY FROM STATION WHERE UPPER(SUBSTR(CITY, LENGTH(CITY), 1)) NOT IN ('A','E','I','O','U') AND LOWER(SUBSTR(CITY, LENGTH(CITY),1)) NOT IN ('a','e','i','o','u');    
+   15)answer--SELECT DISTINCT CITY FROM STATION WHERE LOWER(SUBSTR(CITY,1,1)) NOT IN ('a','e','i','o','u') OR LOWER(SUBSTR(CITY, LENGTH(CITY),1)) NOT IN ('a','e','i','o','u');   
+   16)answer--SELECT DISTINCT CITY FROM STATION WHERE LOWER(SUBSTR(CITY,1,1)) NOT IN ('a','e','i','o','u') AND LOWER(SUBSTR(CITY,LENGTH(CITY),1)) NOT IN ('a','e','i','o','u');    
