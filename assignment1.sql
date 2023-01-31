@@ -31,4 +31,8 @@ order by author_id asc
 19) answer -- select round((select count(*) from Delivery where order_date = customer_pref_delivery_date) / (count(delivery_id)) * 100 , 2)
 as immediate_percentage from Delivery;
 20) answer--select employee_id, count(team_id) over(partition by team_id) team_size from employee;
-21) answer-- 
+21) answer-- select country_name, case when avg(weather_state) <= 15 then "Cold"
+                          when avg(weather_state) >= 25 then "Hot"
+                          else "Warm" end as weather_type from countries 
+inner join weather on countries.country_id = weather.country_id where left(day, 7) = '2019-11'
+group by country_name;
