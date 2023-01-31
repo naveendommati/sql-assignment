@@ -28,3 +28,7 @@ from Views
 where author_id = viewer_id
 group by author_id
 order by author_id asc
+19) answer -- select round((select count(*) from Delivery where order_date = customer_pref_delivery_date) / (count(delivery_id)) * 100 , 2)
+as immediate_percentage from Delivery;
+20) answer--select employee_id, count(team_id) over(partition by team_id) team_size from employee;
+21) answer-- 
