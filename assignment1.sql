@@ -30,8 +30,16 @@ group by author_id
 order by author_id asc
 19) answer -- select round((select count(*) from Delivery where order_date = customer_pref_delivery_date) / (count(delivery_id)) * 100 , 2)
 as immediate_percentage from Delivery;
-20) answer--select employee_id, count(team_id) over(partition by team_id) team_size from employee;
-21) answer-- select country_name, case when avg(weather_state) <= 15 then "Cold"
+21) answer--select employee_id, count(team_id) over(partition by team_id) team_size from employee;
+22) answer-- select country_name, case when avg(weather_state) <= 15 then "Cold"
+23) answer-- SELECT a.product_id
+	, round(SUM(a.units * b.price) / SUM(a.units), 2) AS average_price
+FROM UnitsSold a
+	JOIN Prices b
+	ON (a.product_id = b.product_id
+		AND a.purchase_date >= b.start_date
+		AND a.purchase_date <= b.end_date)
+group by product_id
                           when avg(weather_state) >= 25 then "Hot"
                           else "Warm" end as weather_type from countries 
 inner join weather on countries.country_id = weather.country_id where left(day, 7) = '2019-11'
