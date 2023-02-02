@@ -105,4 +105,63 @@ left join EmployeeUNI
 on if (Employees.id = EmployeeUNI.id, Employees.id, null);
 
 33) answer-- 
-	
+	select name, sum(ifnull(distance, 0)) as travelled_distance
+from rides r
+right join users u
+on r.user_id = u.id
+group by name
+order by 2 desc,1 asc;
+34) answer-- no order table in question;
+
+35)answer-- SELECT user_name AS results FROM
+(
+SELECT a.name AS user_name, COUNT(*) AS counts FROM Movie_Rating AS b
+    JOIN Users AS a
+    on a.user_id = b.user_id
+    GROUP BY b.user_id
+    ORDER BY counts DESC, user_name ASC LIMIT 1
+) first_query
+UNION
+SELECT movie_name AS results FROM
+(
+SELECT c.title AS movie_name, AVG(d.rating) AS rate FROM Movie_Rating AS d
+    JOIN Movies AS c
+    on c.movie_id = d.movie_id
+    WHERE substr(d.created_at, 1, 7) = '2020-02'
+    GROUP BY d.movie_id
+    ORDER BY rate DESC, movie_name ASC LIMIT 1
+) second_query;
+
+36) answer---
+select name, sum(ifnull(distance, 0)) as travelled_distance
+from rides r
+right join users u
+on r.user_id = u.id
+group by name
+order by 2 desc,1 asc;
+37) answer-- select unique_id, name
+from Employees
+left join EmployeeUNI
+on if (Employees.id = EmployeeUNI.id, Employees.id, null);
+38)answer---select s.id, s.name
+from students s
+left join departments d
+on s.department_id = d.id
+where d.id is null;
+
+39) answer---
+select from_id as person1,to_id as person2,
+    count(duration) as call_count, sum(duration) as total_duration
+from (select * 
+      from Calls 
+      
+      union all
+      
+      select to_id, from_id, duration 
+      from Calls) t1
+where from_id < to_id
+group by person1, person2;
+
+40)answer--
+
+
