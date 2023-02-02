@@ -53,4 +53,14 @@ FROM
 Activity ) as rank_date
 WHERE denserank_date = 1;
 
-26) answer--
+26) answer--select a.product_name, sum(unit) as unit
+from Products a
+left join Orders b
+on a.product_id = b.product_id
+where b.order_date between '2020-02-01' and '2020-02-29'
+group by a.product_id
+having sum(unit) >= 100;
+
+27) answer-- SELECT *
+FROM Users
+WHERE REGEXP_LIKE(mail, '^[a-zA-Z][a-zA-Z0-9\_\.\-]*@leetcode.com');
