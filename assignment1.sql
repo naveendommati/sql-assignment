@@ -44,3 +44,13 @@ group by product_id
                           else "Warm" end as weather_type from countries 
 inner join weather on countries.country_id = weather.country_id where left(day, 7) = '2019-11'
 group by country_name;
+24) answer --  select player_id, min(event_date)as first_login from activity group by player_id;
+25) answer-- SELECT
+player_id,
+event_date,
+dense_rank() OVER (PARTITION BY player_id order by event_date) as denserank_date
+FROM
+Activity ) as rank_date
+WHERE denserank_date = 1;
+
+26) answer--
