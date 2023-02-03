@@ -163,5 +163,113 @@ where from_id < to_id
 group by person1, person2;
 
 40)answer--
+select p.product_id, 
+    round(sum(p.price * u.units)/sum(u.units), 2) as average_price
+from Prices p
+left join UnitsSold u
+on p.product_id = u.product_id and 
+    datediff(u.purchase_date, p.start_date) >= 0 and
+    datediff(p.end_date, u.purchase_date) >= 0
+group by p.product_id;
 
+41)answer---
+select name as warehouse_name, sum(units * vol) as volume
+from Warehouse w
+join (select product_id, Width*Length*Height as vol
+     from Products) p
+on w.product_id = p.product_id
+group by name;
+42) answer--
+select a.sale_date, a.sold_num - b.sold_num
+from Sales a left join Sales b
+on a.sale_date = b.sale_date
+where a.fruit = 'apples' and b.fruit = 'oranges';
+
+43) answer--SELECT
+round((count(distinct c.player_id) / (select count(distinct player_id) from activity)),2)as fraction
+FROM
+CTE c
+JOIN Activity a
+on c.player_id = a.player_id
+and datediff(c.event_start_date, a.event_date) = -1;
+
+44) answer--
+select 
+    a.name 
+from 
+    employee a 
+inner join 
+    employee b 
+on (a.id = b.managerid) 
+group by a.name 
+having count(distinct b.id) >= 5;
+
+45) answer---
+SELECT dept_name, COUNT(student_id) AS student_number FROM
+department AS d LEFT JOIN student AS s ON d.dept_id = s.dept_id
+GROUP BY dept_name
+ORDER BY student_number DESC, dept_name;
+		
+46) answer--
+SELECT
+    customer_id
+FROM customer
+GROUP BY customer_id
+HAVING COUNT( DISTINCT product_key) = (SELECT COUNT(*) FROM product);
+
+47) answer-- 
+SELECT
+    project_id,
+    employee_id
+FROM (
+    SELECT
+        p.project_id,
+        p.employee_id,
+        DENSE_RANK() OVER(PARTITION BY p.project_id ORDER BY e.experience_years DESC) as rnk
+    FROM project as p JOIN employee as e
+    ON p.employee_id = e.employee_id
+    ) x
+WHERE rnk = 1;
+
+48)answer--
+SELECT b.book_id, 
+       b.NAME 
+FROM   books AS b 
+       LEFT JOIN orders AS o 
+              ON b.book_id = o.book_id 
+                 AND dispatch_date BETWEEN '2018-06-23' AND '2019-6-23' 
+WHERE  Datediff('2019-06-23', b.available_from) > 30 
+GROUP BY book_id 
+HAVING Sum(IFNULL(o.quantity, 0)) < 10 ORDER  BY NULL ;
+
+49) answer--
+select student_id, min(course_id) as course_id, grade
+from Enrollments
+where (student_id, grade) in 
+    (select student_id, max(grade)
+    from Enrollments
+    group by student_id)
+group by student_id
+order by student_id asc;
+
+50) answer--
+SELECT group_id, 
+       player_id 
+FROM   (SELECT p.group_id, 
+               ps.player_id, 
+               Sum(ps.score) AS score 
+        FROM   players p INNER JOIN
+               (SELECT first_player AS player_id, 
+                       first_score  AS score 
+                FROM   matches 
+                UNION ALL 
+                SELECT second_player AS player_id,
+                       second_score  AS score
+                FROM   matches) ps 
+        ON  p.player_id = ps.player_id 
+        GROUP  BY ps.player_id 
+        ORDER  BY group_id, 
+                  score DESC, 
+                  player_id) top_scores 
+GROUP  BY group_id;
 
