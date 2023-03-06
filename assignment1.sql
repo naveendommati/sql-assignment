@@ -47,12 +47,9 @@ group by product_id
                          
 24) answer --  select player_id, min(event_date)as first_login from activity group by player_id;
 25) answer-- SELECT
-player_id,
-event_date,
-dense_rank() OVER (PARTITION BY player_id order by event_date) as denserank_date
-FROM
-Activity ) as rank_date
-WHERE denserank_date = 1;
+ player_id , device_id
+from activity a where event_date = (select min(event_date) from activity  group by player_id having player_id=a.player_id) ;
+
 
 26) answer--select a.product_name, sum(unit) as unit
 from Products a
