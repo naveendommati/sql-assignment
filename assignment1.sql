@@ -58,7 +58,10 @@ on a.product_id = b.product_id
 where b.order_date between '2020-02-01' and '2020-02-29'
 group by a.product_id
 having sum(unit) >= 100;
-
+    ( or )
+select distinct b.product_name, sum(a.unit) over (partition by a.product_id) as unit from orders a right join products b on a.product_id = b.product_id 
+where a.order_date  between '2020-02-01' and  '2020-02-28' order by unit desc limit 2 ;     
+     
 27) answer-- SELECT *
 FROM Users
 WHERE REGEXP_LIKE(mail, '^[a-zA-Z][a-zA-Z0-9\_\.\-]*@leetcode.com');
@@ -89,7 +92,12 @@ join TVProgram using(content_id)
 where kids_content = 'Y' 
 	and content_type = 'Movies' 
 	and (month(program_date), year(program_date)) = (6, 2020);
+	(or)
 	
+select b.title from tvprogram a join  content b on a.content_id = b.content_id 
+where  a.program_date between '2020-06-10' and '2020-06-28' and kids_content = 'y' group by title  ;
+	
+		
 30) answer--
 select NPV.* from NPV left join
 Queries on NPV.id = Queries.id and NPV.year = Queries.year;
