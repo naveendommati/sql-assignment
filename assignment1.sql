@@ -32,6 +32,10 @@ order by author_id asc
 as immediate_percentage from Delivery;
 21) answer--select employee_id, count(team_id) over(partition by team_id) team_size from employee;
 22) answer-- select country_name, case when avg(weather_state) <= 15 then "Cold"
+                                  when avg(weather_state) >= 25 then "Hot"
+                                  else "Warm" end as weather_type from countries 
+inner join weather on countries.country_id = weather.country_id where left(day, 7) = '2019-11'
+group by country_name;
 23) answer-- SELECT a.product_id
 	, round(SUM(a.units * b.price) / SUM(a.units), 2) AS average_price
 FROM UnitsSold a
@@ -40,10 +44,7 @@ FROM UnitsSold a
 		AND a.purchase_date >= b.start_date
 		AND a.purchase_date <= b.end_date)
 group by product_id
-                          when avg(weather_state) >= 25 then "Hot"
-                          else "Warm" end as weather_type from countries 
-inner join weather on countries.country_id = weather.country_id where left(day, 7) = '2019-11'
-group by country_name;
+                         
 24) answer --  select player_id, min(event_date)as first_login from activity group by player_id;
 25) answer-- SELECT
 player_id,
